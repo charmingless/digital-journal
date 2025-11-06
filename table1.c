@@ -10,24 +10,23 @@
  * 	1.5 - число пассажиров/количество грузов (pasngnum/cargonum);
  * 	1.6 - осадка судна (vesdradt).
  */
-struct table1
-{
-	char tripnum[16], stopoint[16];
+struct table1 {
+	int tripnum, pasngnum;
+	char stopoint[3];
 	time_t arrtime, deptime;
-	int pasngnum;
 	float vesdraft;
 };
 
 int
 main()
 {
-	scanf("%c, %c, %ld, %ld, %d, %f\n" \
-	       &table1.tripnum, &table1.stoppoint, &table1.arrtime \
-	       &table1.deptime, &table1.pasngnum, &table1.vesdraft);
-	printf("Номер рейса: %c;\n Пункт оставновки: %c;\n Время прибытия: %ld;\n \
-		Время отправления: %ld;\n Число пассажиров: %d;\n Осадка судна: %f;\n"
-		table1.tripnum, table1.stoppoint, table1.arrtime \                                  
-		table1.deptime, table1.pasngnum, table1.vesdraft);
+	struct table1 table1;
+	FILE* db;
+	db = fopen("table1.csv", "a");
 
+	scanf("%d%s%lld%lld%d%f", &table1.tripnum, table1.stopoint, &table1.arrtime, &table1.deptime, &table1.pasngnum, &table1.vesdraft);
+	fprintf(db, "%d,%s,%lld,%lld,%d,%.2f\n", table1.tripnum, table1.stopoint, table1.arrtime, table1.deptime, table1.pasngnum, table1.vesdraft);
+
+	fclose(db);
 	return 0;
 }
